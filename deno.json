@@ -1,0 +1,14 @@
+{
+  "tasks": {
+    "dev": "deno run -A --env-file --watch src/main.ts"
+  },
+  "imports": {
+    "@meistrari/tela-sdk-js": "npm:@meistrari/tela-sdk-js@^1.0.2",
+    "@neon/serverless": "jsr:@neon/serverless@^1.0.0",
+    "@std/assert": "jsr:@std/assert@1",
+    "grammy": "https://lib.deno.dev/x/grammy@v1/mod.ts",
+    "grammy/": "https://lib.deno.dev/x/grammy@v1/",
+    "grammy_storages/": "https://lib.deno.dev/x/grammy_storages@v2/",
+    "zod": "npm:zod@^3.24.4"
+  }
+}
