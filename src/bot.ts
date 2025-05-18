@@ -70,7 +70,7 @@ export function getBot(config: AppConfig, database: Database) {
       ? ctx.msg.forward_origin.sender_user.first_name
       : ctx.msg.forward_origin?.type === "hidden_user"
       ? ctx.msg.forward_origin.sender_user_name
-      : "Unknown";
+      : ctx.msg.from.first_name ?? "Unknown";
 
     await database.storeMessage(ctx.chatId, {
       author,
