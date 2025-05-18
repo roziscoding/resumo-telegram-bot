@@ -9,6 +9,7 @@ export const AppConfig = z.object({
 }).transform((env) => ({
   telegram: {
     token: env.TELEGRAM_TOKEN,
+    secret: env.TELEGRAM_TOKEN.replace(/[^a-z0-9]/ig, ""),
   },
   tela: {
     token: env.TELA_TOKEN,
