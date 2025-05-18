@@ -7,6 +7,16 @@ import { formatTimestamp } from "./utils.ts";
 export function getBot(config: AppConfig, database: Database) {
   const bot = new Bot(config.telegram.token);
 
+  bot.command("start", (ctx) => {
+    return ctx.chat.type === "private"
+      ? ctx.reply(
+        "Me adiciona num grupo pra eu começar a ler as mensagens dele e poder resumir :)",
+      )
+      : ctx.reply(
+        "Pra resumir as mensagens, responde à primeira mensagem que quiser resumir com o comando /resumo",
+      );
+  });
+
   bot.command("resumo", async (ctx, next) => {
     if (!ctx.chatId) return next();
 
