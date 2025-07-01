@@ -18,3 +18,21 @@ export async function extractSummary(history: string) {
 
   return completion.choices[0].message.content;
 }
+
+export async function defineConcepts(message: string) {
+  const completion = await tela.completions.create<
+    { message: string },
+    {
+      concepts: { name: string; definition: string }[];
+      message: string;
+    }
+  >({
+    canvasId: "62caa156-1d75-4905-8bcb-185bf845b65f",
+    variables: {
+      message,
+    },
+    stream: false,
+  });
+
+  return completion.choices[0].message.content;
+}

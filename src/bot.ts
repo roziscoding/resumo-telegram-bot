@@ -1,7 +1,7 @@
 import { Bot } from "grammy";
 import { AppConfig } from "./config.ts";
 import { Database } from "./db.ts";
-import { extractSummary } from "./tela.ts";
+import { defineConcepts, extractSummary } from "./tela.ts";
 import { formatTimestamp } from "./utils.ts";
 
 export function getBot(config: AppConfig, database: Database) {
@@ -61,6 +61,32 @@ export function getBot(config: AppConfig, database: Database) {
     }
 
     return ctx.reply(formattedSummary.join("\n"));
+  });
+
+  bot.command("wtf", async (ctx) => {
+    if (!ctx.msg.reply_to_message) {
+      return ctx.reply("Responda a uma mensagem para usar esse comando");
+    }
+
+    const messageText = ctx.msg.reply_to_message.text;
+
+    if (!messageText) {
+      return ctx.reply(
+        "Responda a uma mensagem de texto para usar esse comando",
+      );
+    }
+
+    await ctx.replyWithChatAction("typing");
+
+    const { message, concepts } = await defineConcepts(messageText);
+
+    const formattedConcepts = concepts.map(
+      (concept) => (`<b>${concept.name}</b>\n${concept.definition}`),
+    );
+
+    const formattedMessage = `${message}\n\n${formattedConcepts.join("\n\n")}`;
+
+    return ctx.reply(formattedMessage, { parse_mode: "HTML" });
   });
 
   bot.on("message:text", async (ctx, next) => {
