@@ -104,7 +104,14 @@ export function getBot(config: AppConfig, database: Database) {
       timestamp: ctx.msg.date,
     });
 
-    console.log("Stored message", JSON.stringify(ctx.msg, null, 2));
+    console.log(
+      "Stored message",
+      ctx.msg.text,
+      "from",
+      author,
+      "at",
+      ctx.chat.title ?? ctx.chat.username ?? ctx.chat.id,
+    );
 
     return next();
   });
