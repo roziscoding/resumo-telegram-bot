@@ -23,7 +23,7 @@ export async function defineConcepts(message: string, question?: string) {
   console.log(
     "[tela] Defining concepts for message:",
     message,
-    "question:",
+    "| question:",
     question,
   );
 
@@ -36,7 +36,6 @@ export async function defineConcepts(message: string, question?: string) {
       message: string;
     }
   >({
-    canvasId: "62caa156-1d75-4905-8bcb-185bf845b65f",
     versionId: "b469e438-b32a-4ec3-b18a-962efb35e1e8",
     variables: {
       message,
