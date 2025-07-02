@@ -78,7 +78,7 @@ export function getBot(config: AppConfig, database: Database) {
 
     await ctx.replyWithChatAction("typing");
 
-    const { message, concepts } = await defineConcepts(messageText);
+    const { message, concepts } = await defineConcepts(messageText, ctx.match);
 
     const formattedConcepts = concepts.map(
       (concept) => (`<b>${concept.name}</b>\n${concept.definition}`),
