@@ -2,11 +2,12 @@
   "tasks": {
     "dev": "deno run -A --env-file --watch src/main.ts",
     "serve": "deno run -A --env-file src/server.ts",
-    "setwebhook": "deno run -A --env-file set-webhook.ts"
+    "setwebhook": "deno run -A --env-file set-webhook.ts",
+    "prod:setwebhook": "deno run -A --env-file=.env.prod set-webhook.ts"
   },
   "imports": {
-    "@meistrari/tela-sdk-js": "npm:@meistrari/tela-sdk-js@^1.0.2",
-    "@neon/serverless": "jsr:@neon/serverless@^1.0.0",
+    "@meistrari/tela-sdk-js": "npm:@meistrari/tela-sdk-js@1.0.2",
+    "@neondatabase/serverless": "npm:@neondatabase/serverless@1.0.0",
     "@std/assert": "jsr:@std/assert@1",
     "grammy": "https://lib.deno.dev/x/grammy@v1/mod.ts",
     "grammy/": "https://lib.deno.dev/x/grammy@v1/",

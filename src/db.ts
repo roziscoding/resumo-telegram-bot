@@ -1,4 +1,4 @@
-import { neon } from "@neon/serverless";
+import { neon } from "@neondatabase/serverless";
 import { AppConfig } from "./config.ts";
 
 type Message = {
@@ -27,12 +27,16 @@ export async function getDatabase(config: AppConfig) {
     )`;
   }
 
-  function getMessages(chatId: number, startTime: number): Promise<Message[]> {
-    return sql`SELECT * FROM messages WHERE timestamp >= ${
+  async function getMessages(
+    chatId: number,
+    startTime: number,
+  ): Promise<Message[]> {
+    const messages = await sql`SELECT * FROM messages WHERE timestamp >= ${
       new Date(
         startTime * 1000,
       ).toISOString()
     } AND chatId = ${String(chatId)} ORDER BY timestamp ASC`;
+    return messages as Message[];
   }
 
   return { storeMessage, getMessages };
