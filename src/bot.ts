@@ -97,10 +97,10 @@ export function getBot(config: AppConfig, database: Database) {
     if (!config.telegram.ownerId) return next();
 
     if (ctx.myChatMember.from.id !== config.telegram.ownerId) {
-      await Promise.allSettled([
-        ctx.reply("Nope."),
-        ctx.leaveChat(),
-      ]);
+      await ctx
+        .reply("Nope.")
+        .finally(() => ctx.leaveChat())
+        .catch(() => {});
     }
   });
 
