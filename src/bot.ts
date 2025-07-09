@@ -32,12 +32,16 @@ export function getBot(config: AppConfig, database: Database) {
 
     const history = selectedMessages.map((msg) =>
       [
-        `${msg.author}, [${formatTimestamp(msg.timestamp)}]`,
+        `${msg.originalId}: ${msg.author}, [${formatTimestamp(msg.timestamp)}]${
+          msg.inReplyTo ? ` (em resposta a ${msg.inReplyTo})` : ""
+        }:`,
         "",
         msg.text,
         "",
       ].join("\n")
     ).join("\n");
+
+    console.log(history);
 
     await ctx.replyWithChatAction("typing");
 
@@ -102,6 +106,8 @@ export function getBot(config: AppConfig, database: Database) {
       author,
       text: ctx.msg.text,
       timestamp: ctx.msg.date,
+      originalId: ctx.msg.message_id,
+      inReplyTo: ctx.msg.reply_to_message?.message_id,
     });
 
     console.log(

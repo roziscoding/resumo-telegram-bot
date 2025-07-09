@@ -5,6 +5,8 @@ type Message = {
   author: string;
   text: string;
   timestamp: number;
+  originalId: number;
+  inReplyTo?: number;
 };
 
 export async function getDatabase(config: AppConfig) {
@@ -15,15 +17,19 @@ export async function getDatabase(config: AppConfig) {
     author TEXT NOT NULL,
     text TEXT NOT NULL,
     timestamp TIMESTAMP,
-    chatId TEXT NOT NULL
+    chatId TEXT NOT NULL,
+    in_reply_to INTEGER,
+    original_id INTEGER NOT NULL
   )`;
 
   async function storeMessage(chatId: number, message: Message) {
-    await sql`INSERT INTO messages(author, text, timestamp, chatId) VALUES (
+    await sql`INSERT INTO messages(author, text, timestamp, chatId, original_id, in_reply_to) VALUES (
       ${message.author},
       ${message.text},
       ${new Date(message.timestamp * 1000).toISOString()},
-      ${String(chatId)}
+      ${String(chatId)},
+      ${message.originalId},
+      ${message.inReplyTo ?? null}
     )`;
   }
 
@@ -36,7 +42,11 @@ export async function getDatabase(config: AppConfig) {
         startTime * 1000,
       ).toISOString()
     } AND chatId = ${String(chatId)} ORDER BY timestamp ASC`;
-    return messages as Message[];
+    return messages.map((msg) => ({
+      ...msg,
+      originalId: msg.original_id,
+      inReplyTo: msg.in_reply_to ?? null,
+    })) as Message[];
   }
 
   return { storeMessage, getMessages };
