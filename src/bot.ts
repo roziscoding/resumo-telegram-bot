@@ -93,6 +93,17 @@ export function getBot(config: AppConfig, database: Database) {
     return ctx.reply(formattedMessage, { parse_mode: "HTML" });
   });
 
+  bot.on("my_chat_member:from", async (ctx, next) => {
+    if (!config.telegram.ownerId) return next();
+
+    if (ctx.myChatMember.from.id !== config.telegram.ownerId) {
+      await Promise.allSettled([
+        ctx.reply("Nope."),
+        ctx.leaveChat(),
+      ]);
+    }
+  });
+
   bot.on("message:text", async (ctx, next) => {
     if (!ctx.chatId) return next();
 
