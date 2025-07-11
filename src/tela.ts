@@ -52,7 +52,7 @@ export async function tldr(message: string) {
     { message: string },
     { resumo: string }
   >({
-    versionId: "2edf3551-9fa6-46e4-b815-e71dd117b954",
+    versionId: "cc9cf3a0-7fba-4352-ac01-3cc690b45e6d",
     variables: {
       message,
     },
