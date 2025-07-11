@@ -52,7 +52,7 @@ export async function tldr(message: string) {
     { message: string },
     { resumo: string }
   >({
-    canvasId: "bd3eb580-00aa-46aa-9efc-f34a8d6d4174",
+    versionId: "2edf3551-9fa6-46e4-b815-e71dd117b954",
     variables: {
       message,
     },

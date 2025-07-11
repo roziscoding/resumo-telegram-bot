@@ -1,4 +1,4 @@
-import { Bot } from "grammy";
+import { Bot, Context } from "grammy";
 import { AppConfig } from "./config.ts";
 import { Database } from "./db.ts";
 import { defineConcepts, extractSummary, tldr } from "./tela.ts";
@@ -94,7 +94,14 @@ export function getBot(config: AppConfig, database: Database) {
   });
 
   bot.command("tldr", async (ctx) => {
-    const text = ctx.msg.text;
+    const text = ctx.msg.reply_to_message?.text ||
+      ctx.msg.reply_to_message?.caption;
+
+    if (!text) {
+      return ctx.reply(
+        "Responda a uma mensagem de texto pra usar esse comando",
+      );
+    }
 
     await ctx.replyWithChatAction("typing");
 
