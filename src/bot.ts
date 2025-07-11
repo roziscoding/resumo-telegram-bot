@@ -105,9 +105,9 @@ export function getBot(config: AppConfig, database: Database) {
 
     await ctx.replyWithChatAction("typing");
 
-    const { resumo } = await tldr(text);
+    const { summary } = await tldr(text);
 
-    return ctx.reply(resumo, {
+    return ctx.reply(summary, {
       reply_parameters: {
         message_id: ctx.msg.message_id,
         allow_sending_without_reply: true,

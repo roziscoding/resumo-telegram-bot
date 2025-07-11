@@ -50,7 +50,7 @@ export async function defineConcepts(message: string, question?: string) {
 export async function tldr(message: string) {
   const completion = await tela.completions.create<
     { message: string },
-    { resumo: string }
+    { summary: string }
   >({
     versionId: "cc9cf3a0-7fba-4352-ac01-3cc690b45e6d",
     variables: {
