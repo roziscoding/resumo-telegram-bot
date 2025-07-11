@@ -1,7 +1,7 @@
 import { Bot } from "grammy";
 import { AppConfig } from "./config.ts";
 import { Database } from "./db.ts";
-import { defineConcepts, extractSummary } from "./tela.ts";
+import { defineConcepts, extractSummary, tldr } from "./tela.ts";
 import { formatTimestamp } from "./utils.ts";
 
 export function getBot(config: AppConfig, database: Database) {
@@ -91,6 +91,21 @@ export function getBot(config: AppConfig, database: Database) {
     const formattedMessage = `${message}\n\n${formattedConcepts.join("\n\n")}`;
 
     return ctx.reply(formattedMessage, { parse_mode: "HTML" });
+  });
+
+  bot.command("tldr", async (ctx) => {
+    const text = ctx.msg.text;
+
+    await ctx.replyWithChatAction("typing");
+
+    const { resumo } = await tldr(text);
+
+    return ctx.reply(resumo, {
+      reply_parameters: {
+        message_id: ctx.msg.message_id,
+        allow_sending_without_reply: true,
+      },
+    });
   });
 
   bot.on("my_chat_member:from", async (ctx, next) => {

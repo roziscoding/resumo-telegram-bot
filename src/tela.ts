@@ -46,3 +46,18 @@ export async function defineConcepts(message: string, question?: string) {
 
   return completion.choices[0].message.content;
 }
+
+export async function tldr(message: string) {
+  const completion = await tela.completions.create<
+    { message: string },
+    { resumo: string }
+  >({
+    canvasId: "bd3eb580-00aa-46aa-9efc-f34a8d6d4174",
+    variables: {
+      message,
+    },
+    stream: false,
+  });
+
+  return completion.choices[0].message.content;
+}
